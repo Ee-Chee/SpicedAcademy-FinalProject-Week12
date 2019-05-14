@@ -1,0 +1,334 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #d1d1e0;
+    margin: 0;
+}
+/* font-family: 'Radley', serif; */
+/* ---------------------General classes-------------------- */
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+}
+
+input {
+    font-family: "Radley", serif;
+    border: 2px solid #0066cc;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+button {
+    padding: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    background-color: #ffffe6;
+    border: 1px solid #006680;
+    border-radius: 5px;
+    box-shadow: 0 5px #999;
+    font-size: 15px;
+    color: #00e6e6;
+    font-family: "Radley", serif;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0066cc;
+}
+
+button:active {
+    background-color: #99e6ff;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+#copyright {
+    margin: 10px;
+    font-family: "Radley", serif;
+}
+
+#bee {
+    width: 40px;
+    height: 40px;
+}
+
+.text {
+    font-family: "Radley", serif;
+}
+
+.nav {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: space-between;
+    background-color: #00e6e6;
+    padding: 15px;
+    margin: 0px 100px;
+    font-family: "Radley", serif;
+    color: white;
+    font-weight: bold;
+}
+
+#nav {
+    justify-content: center;
+}
+
+.link-add {
+    border-right: 3px solid #0066cc;
+}
+
+.link-add2 {
+    border-left: 3px solid #0066cc;
+}
+
+.link {
+    /* border: 1px solid black; */
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 10px 0px;
+    padding: 0 10px;
+}
+
+.link:visited {
+    color: white;
+}
+
+.link:hover {
+    background-color: rgb(0, 102, 204);
+}
+
+img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.error {
+    font-size: 15px;
+    color: red;
+    font-family: "Radley", serif;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid #00e6e6;
+    border-left-style: none;
+    border-right-style: none;
+    margin: 0px 100px 80px 100px;
+    background-color: white;
+    color: #0066cc;
+    font-family: "Radley", serif;
+    font-size: 20px;
+    padding: 20px 100px;
+}
+
+.content-container-horizontal {
+    display: flex;
+    justify-content: center;
+    border: 5px solid #00e6e6;
+    border-left-style: none;
+    border-right-style: none;
+    margin: 0px 100px 80px 100px;
+    background-color: white;
+    color: #0066cc;
+    font-family: "Radley", serif;
+    font-size: 20px;
+    padding: 20px 100px;
+}
+/* ---------------------General classes-------------------- */
+/* welcome.js */
+#logo {
+    border: 5px solid #0066cc;
+    font-size: 60px;
+    border-right-style: none;
+    border-top-style: none;
+    border-radius: 5px;
+    font-family: "Radley", serif;
+    padding: 0px 10px;
+    color: #0066cc;
+    margin-right: 20px;
+}
+
+#mess,
+#around {
+    font-size: 33px;
+    color: #0066cc;
+    font-family: "Radley", serif;
+    font-weight: bold;
+}
+
+#center-add {
+    border: 5px solid #0066cc;
+    padding: 50px;
+    background-color: white;
+    border-right-style: none;
+    border-left-style: none;
+    margin: 80px 100px;
+}
+
+/* introduction.js */
+#banner {
+    background-image: url("twin-tower.jpeg");
+    margin: 0px 100px 80px 100px;
+    height: 650px;
+    border-bottom: 5px solid #00e6e6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.8;
+    z-index: -1;
+    position: relative;
+}
+
+#middle-text {
+    /* border: 5px solid #00e6e6; */
+    position: absolute;
+    transform: translate(40%, 40%);
+    color: #00e6e6;
+    width: 100%;
+    font-size: 30px;
+    font-family: "Radley", serif;
+    padding-left: 50px;
+}
+
+#messi {
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid black; */
+    height: 180px;
+    width: 80%;
+}
+
+#messi-img {
+    width: 15%;
+    height: 100%;
+}
+
+/* features */
+.icon {
+    margin-right: 20px;
+    font-size: 50px;
+    /* border: 1px solid black; */
+    width: 50px;
+}
+
+.features-container {
+    display: flex;
+    /* border: 1px solid black; */
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* app */
+#header {
+    display: flex;
+    justify-content: space-between;
+    border: 3px solid #0066cc;
+    padding: 0px 30px;
+    background-color: white;
+    border-right-style: none;
+    border-left-style: none;
+    margin: 50px 100px;
+}
+
+#logo2 {
+    border: 3px solid #0066cc;
+    font-size: 60px;
+    border-right-style: none;
+    border-top-style: none;
+    border-radius: 4px;
+    font-family: "Radley", serif;
+    padding: 0px 10px;
+    color: #0066cc;
+    margin: 10px 0px;
+}
+
+#user-container {
+    /* border: 2px solid black; */
+    display: flex;
+    align-items: center;
+}
+
+#user {
+    border: 3px solid red;
+    border-radius: 5px;
+    padding: 0px 10px;
+    font-size: 40px;
+    font-family: "Radley", serif;
+    color: black;
+    margin-right: 10px;
+}
+
+#user-function {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* profile */
+#profile {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    font-size: 18px;
+}
+
+/* online friends */
+.online-container {
+    margin-right: 20px;
+}
+
+.online-container:hover {
+    background-color: #0066cc;
+}
+
+.online {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* friends */
+.friend-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* chat */
+#nicewrap {
+    margin: 0px 50px;
+    width: 400px;
+    height: 500px;
+    border: 3px solid aqua;
+    display: flex;
+    flex-direction: column;
+}
+.chats {
+    overflow-x: hidden;
+}
+
+.inputfield {
+    width: 100%;
+    height: 100px;
+}
