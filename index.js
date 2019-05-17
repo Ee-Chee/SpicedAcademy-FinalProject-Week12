@@ -14,7 +14,7 @@ const cf = require("./config.json");
 ////////////////////////////////////////socket IO
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
-    origins: "localhost:8082 messaround.herokuapp.com:*"
+    origins: "localhost:8082 m-around.herokuapp.com:*"
 });
 ////////////////////////////////////////////////////
 

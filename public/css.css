@@ -446,9 +446,11 @@ img {
 /* Pm */
 #new-message {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
-    left: 25%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: white;
     width: 500px;
     border: 1px solid #00ff00;

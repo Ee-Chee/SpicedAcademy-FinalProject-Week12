@@ -25,8 +25,13 @@ export default class Pm extends React.Component {
                 });
             } else {
                 // console.log("You can do bunch of things here");
+                // console.log(pm.newPM);
                 this.setState({
                     newMessageDisplay: true
+                });
+
+                this.setState({
+                    latestMsgByOther: pm.newPM[pm.newPM.length - 1].pm
                 });
 
                 let temp = this;
@@ -34,7 +39,7 @@ export default class Pm extends React.Component {
                     temp.setState({
                         newMessageDisplay: false
                     });
-                }, 3000);
+                }, 5000);
             }
         });
         if (this.myDiv) {
@@ -87,7 +92,8 @@ export default class Pm extends React.Component {
                         newPM: resp.data,
                         other_id: this.props.profileOwnerId
                     });
-                    e.target.value = ""; //put here so that it wouldnt wipe off the text if error occurs
+                    e.persist();
+                    document.getElementById("textfield").value = ""; //put here so that it wouldnt wipe off the text if error occurs
                 })
                 .catch(err => {
                     console.log(err);
@@ -146,8 +152,8 @@ export default class Pm extends React.Component {
             <div className="messages-background">
                 {this.state.newMessageDisplay && (
                     <div id="new-message">
-                        you got a new message from user{" "}
-                        <strong>#{this.nextPMer}</strong>
+                        you got a new message from user #{this.nextPMer}
+                        <div>{this.state.latestMsgByOther}</div>
                     </div>
                 )}
                 <div className="messages-container">
