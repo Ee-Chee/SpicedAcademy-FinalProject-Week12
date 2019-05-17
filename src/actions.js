@@ -49,6 +49,13 @@ export async function userLeft(id) {
     };
 }
 
+export async function titles(topics) {
+    return {
+        type: "forum_topics",
+        topics
+    };
+}
+
 export async function topComments(comments) {
     return {
         type: "10_comments",

@@ -106,10 +106,10 @@ app.get("/user", async (req, res) => {
     // console.log(req.session.userId);
     try {
         const data = await dB.getUserInfo(req.session.userId);
-        // console.log(data.rows[0]);
+        // console.log("here again: ", data.rows[0]);
         res.json(data.rows[0]);
     } catch (err) {
-        console.log("Err caught: ", err);
+        console.log("Err caught here: ", err);
     }
 });
 
@@ -155,6 +155,7 @@ app.post("/bioinput", async (req, res) => {
         res.json(data);
     } catch (err) {
         console.log("Err caught: ", err);
+        res.json({ status: false });
     }
 });
 
@@ -232,6 +233,53 @@ app.get("/api/friends", async (req, res) => {
         console.log("Err caught: ", err);
     }
 });
+
+/////////////////////////////////////Private Messages (NEW!!!!!)
+//not using socket because we need pass specific id of the selected chat person.
+//socket is used when it is dealing with general data
+app.get("/privatemessage/:id", async (req, res) => {
+    // console.log(req.session.userId);
+    // console.log(req.params.id);
+    try {
+        const data = await dB.getPMs(req.session.userId, req.params.id);
+        // console.log(data.rows);
+        res.json(data.rows);
+    } catch (err) {
+        console.log("Err caught: ", err);
+    }
+});
+
+app.post("/privatemessage", async (req, res) => {
+    // console.log(req.body);
+    try {
+        await dB.addPM(
+            req.body.msg,
+            req.session.userId,
+            req.body.profileownerid
+        );
+        const data = await dB.getPMs(
+            req.session.userId,
+            req.body.profileownerid
+        );
+        // console.log(data.rows);
+        res.json(data.rows);
+    } catch (err) {
+        console.log("Err caught: ", err);
+        res.json({ status: false });
+    }
+});
+
+app.post("/search", async (req, res) => {
+    // console.log(req.body);
+    try {
+        const data = await dB.searchFriend(req.body.char);
+        // console.log(data.rows);
+        res.json(data.rows);
+    } catch (err) {
+        console.log("Err caught: ", err);
+        res.json({ status: false });
+    }
+});
 // ///////////////////////////checking log-in status
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
@@ -302,42 +350,95 @@ io.on("connection", socket => {
     //disconnect is predefined event. It is triggered whenever the client loses socket connection
     //refresh the page has the same effect as open in the new page and then close it.
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////Forum
+    dB.getForumTitle().then(data => {
+        socket.emit("titles", data.rows);
+    });
 
-    dB.getTop10Comments().then(data => {
-        // console.log("////////////////////////////////////////////////////////");
-        // console.log(data.rows);
-        socket.emit("top10comments", data.rows);
+    socket.on("newTitle", async data => {
+        // console.log(data);
+        try {
+            await dB.addForumTitle(data);
+            const data2 = await dB.getForumTitle();
+            // console.log(data2.rows);
+            io.sockets.emit("titles", data2.rows);
+        } catch (err) {
+            //socket.emit("error", {}); //"error" is reserved. Dont use "error", this name
+            socket.emit("handleTextError", { status: false });
+        }
+    });
+
+    socket.on("getChatMessages", data => {
+        // console.log("log", data);
+        dB.getTop10Comments(data).then(data2 => {
+            socket.emit("top10comments", data2.rows);
+        });
     });
 
     socket.on("newChatMessage", data => {
         // console.log(data, userId);
-        dB.addComment(data, userId).then(data => {
-            // console.log(data.rows); //returns comment id
-            dB.getComment(data.rows[0].id).then(data => {
-                // console.log("here: ", data.rows);
-                io.sockets.emit("chatMessageForRedux", data.rows); //socket.broadcast.emit and io.sockets.sockets[socket.id].broad... same thing, but io is used to send all
+        dB.addComment(data.msg, userId, data.forumId)
+            .then(data => {
+                // console.log(data.rows); //returns comment id
+                dB.getComment(data.rows[0].id).then(data => {
+                    // console.log("here: ", data.rows);
+                    io.sockets.emit("chatMessageForRedux", data.rows); //socket.broadcast.emit and io.sockets.sockets[socket.id].broad... same thing, but io is used to send all
+                });
+            })
+            .catch(() => {
+                socket.emit("handleChatError", { status: false });
             });
-        });
     });
-    //
-    //     //////////////////////////////////////////////////////////////snowman game test/////////////////////////////////////////////////
-    //     socket.on("reset", () => {
-    //         io.sockets.emit("refresh");
-    //     });
-    //
-    //     socket.on("snowmanMouseUp", data => {
-    //         socket.broadcast.emit("moving", data);
-    //     });
-    //
-    //     socket.on("snowmanMouseDown", data => {
-    //         socket.broadcast.emit("startingPoint", data);
-    //     });
-    //
-    //     socket.on("snowmanMouseMove", data => {
-    //         // console.log(data);
-    //         if (data[1]) {
-    //             socket.broadcast.emit("moving", data);
-    //         }
-    //     });
+    ///////////////////////////////////////////////////////////////////private message
+    socket.on("newPrivateMessage", data => {
+        // console.log("here:", data);
+        for (let socketID in onlineUsers) {
+            if (onlineUsers[socketID] === data.other_id) {
+                // console.log("success: ", socketID)
+                io.sockets.sockets[socketID].emit("updatePM", {
+                    newPM: data.newPM,
+                    whoSentIt: userId
+                });
+            }
+        }
+    });
+    //////////////////////////////////////////////////////////////snowman game test/////////////////////////////////////////////////
+    socket.on("reset", () => {
+        io.sockets.emit("refresh");
+    });
+
+    socket.on("saved", async data => {
+        // console.log(userId, data);
+        try {
+            await dB.addDrawing(data, userId);
+        } catch (e) {
+            //default drawing is there, so there will be no error
+            console.log(e);
+        }
+    });
+
+    socket.on("getMasterPiece", async data => {
+        try {
+            const data2 = await dB.getDrawing(data);
+            // console.log(data2);
+            socket.emit("deployDrawing", data2.rows);
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    socket.on("snowmanMouseUp", data => {
+        socket.broadcast.emit("moving", data);
+    });
+
+    socket.on("snowmanMouseDown", data => {
+        socket.broadcast.emit("startingPoint", data);
+    });
+
+    socket.on("snowmanMouseMove", data => {
+        // console.log(data);
+        if (data[1]) {
+            socket.broadcast.emit("moving", data);
+        }
+    });
 });

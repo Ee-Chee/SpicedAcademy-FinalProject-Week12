@@ -53,6 +53,16 @@ export default function Welcome() {
                     <Route path="/info" component={About} />
                 </div>
             </HashRouter>
+            <div id="be-responsive-bro">
+                <div className="messages-background">
+                    <div className="messages-container absolute-center">
+                        As you can see, my website is still responsive to your
+                        device. For the best user experience, please use laptop
+                        or desktop PC to visit my website. Thank you !!! very
+                        much !
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getFriends, makeUnfriend, makeFriend } from "./actions";
 import Friendship from "./friendship";
+import { Link } from "react-router-dom";
 
 class Friends extends React.Component {
     componentDidMount() {
@@ -27,32 +28,39 @@ class Friends extends React.Component {
             );
         } //to handle undefined data while waiting for axios retrieving data. Otherwise, error prompted for currentFriends.map undefined below
         const myFriends = (
-            <div className="content-container">
+            <div className="content-container extra-margin-top">
                 <h2>My added Messers</h2>
-                <div className="row">
+                <div className="wrap-nicely">
                     {currentFriends.map(friend => (
                         <div className="friend-center" key={friend.id}>
-                            <img
-                                src={friend.avatarurl}
-                                height={100}
-                                width={100}
-                            />
-                            {friend.firstn} {friend.lastn}
-                            <Friendship
-                                handleError={true}
-                                profileOwnerId={friend.id}
-                                // change={boolean => {
-                                //     console.log("heresf", boolean);
-                                //     this.forceUpdate();
-                                // }}
-                                makeReduxStateChange={boolean => {
-                                    if (boolean) {
-                                        this.props.dispatch(
-                                            makeUnfriend(friend.id)
-                                        );
+                            <Link
+                                className="friend-link"
+                                to={"/user/" + friend.id}
+                            >
+                                <img
+                                    src={
+                                        friend.avatarurl || "/default-user.png"
                                     }
-                                }}
-                            />
+                                    height={120}
+                                    width={120}
+                                />
+                                {friend.firstn} {friend.lastn}
+                                <Friendship
+                                    handleError={true}
+                                    profileOwnerId={friend.id}
+                                    // change={boolean => {
+                                    //     console.log("heresf", boolean);
+                                    //     this.forceUpdate();
+                                    // }}
+                                    makeReduxStateChange={boolean => {
+                                        if (boolean) {
+                                            this.props.dispatch(
+                                                makeUnfriend(friend.id)
+                                            );
+                                        }
+                                    }}
+                                />
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -62,30 +70,37 @@ class Friends extends React.Component {
         const friendRequesters = (
             <div className="content-container">
                 <h2>These people wanna mess-around together with you</h2>
-                <div className="row">
+                <div className="wrap-nicely">
                     {requestingFriends.map(friend => (
                         <div className="friend-center" key={friend.id}>
-                            <img
-                                src={friend.avatarurl}
-                                height={120}
-                                width={120}
-                            />
-                            {friend.firstn} {friend.lastn}
-                            <Friendship
-                                handleError={true}
-                                profileOwnerId={friend.id}
-                                // change={boolean => {
-                                //     console.log("heresf", boolean);
-                                //     this.forceUpdate();
-                                // }}
-                                makeReduxStateChange={boolean => {
-                                    if (boolean) {
-                                        this.props.dispatch(
-                                            makeFriend(friend.id)
-                                        );
+                            <Link
+                                className="friend-link"
+                                to={"/user/" + friend.id}
+                            >
+                                <img
+                                    src={
+                                        friend.avatarurl || "/default-user.png"
                                     }
-                                }}
-                            />
+                                    height={120}
+                                    width={120}
+                                />
+                                {friend.firstn} {friend.lastn}
+                                <Friendship
+                                    handleError={true}
+                                    profileOwnerId={friend.id}
+                                    // change={boolean => {
+                                    //     console.log("heresf", boolean);
+                                    //     this.forceUpdate();
+                                    // }}
+                                    makeReduxStateChange={boolean => {
+                                        if (boolean) {
+                                            this.props.dispatch(
+                                                makeFriend(friend.id)
+                                            );
+                                        }
+                                    }}
+                                />
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -94,14 +109,19 @@ class Friends extends React.Component {
         return (
             <div className="content-container">
                 {!currentFriends.length && (
-                    <h3>
-                        You have nobody to mess-around with. You might want to
-                        check out other Messers&apos; profile.
-                    </h3>
+                    <div>
+                        <h3>
+                            You have nobody to mess-around with. You might want
+                            to check out other Messers&apos; profile.
+                        </h3>
+                        <Link className="center nemo-button" to="/online">
+                            <button>Finding Nemo</button>
+                        </Link>
+                    </div>
                 )}
                 {!!currentFriends.length && myFriends}
                 {!requestingFriends.length && (
-                    <h3>You have no requesters at the moment.</h3>
+                    <h3>You have no friend-requesters at the moment.</h3>
                 )}
                 {!!requestingFriends.length && friendRequesters}
             </div>

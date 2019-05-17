@@ -4,23 +4,32 @@ import axios from "./axios";
 export default class BioEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { valid: true };
         this.biotext = this.props.bioData;
         this.submit = this.submit.bind(this);
     }
 
     submit() {
         return axios.post("/bioinput", { bio: this.biotext }).then(resp => {
-            // console.log("return", resp.data.rows[0]);
-            if (!resp.data.rows[0].biotext) {
-                // console.log("hhhih");
-                this.setState({ added: false });
-            } //if no biodata, restart again because no data added
-            this.setState({ toggleBioTextField: false });
-            this.props.bioHandler([
-                resp.data.rows[0].biotext,
-                this.state.toggleBioTextField
-            ]);
+            // console.log("return", resp.data);
+            try {
+                if (resp.data.status === false) {
+                    return this.setState({ valid: resp.data.status });
+                } else {
+                    return throwErr;
+                }
+            } catch (err) {
+                if (!resp.data.rows[0].biotext) {
+                    // console.log("hhhih");
+                    this.setState({ added: false });
+                } //if no biodata, restart again because no data added
+                this.setState({ valid: true });
+                this.setState({ toggleBioTextField: false });
+                this.props.bioHandler([
+                    resp.data.rows[0].biotext,
+                    this.state.toggleBioTextField
+                ]);
+            }
 
             // console.log(this.state.toggleBioTextField);
         });
@@ -32,6 +41,13 @@ export default class BioEditor extends React.Component {
     render() {
         return (
             <div>
+                {this.state.valid ? (
+                    <div />
+                ) : (
+                    <p className="error">
+                        Sorry, only limited up to 500 characters
+                    </p>
+                )}
                 {!this.props.bioData && !this.state.added && (
                     <button
                         onClick={() => {

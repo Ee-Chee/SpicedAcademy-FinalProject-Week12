@@ -3,6 +3,7 @@ import {
     onlineUsers,
     userJoined,
     userLeft,
+    titles,
     topComments,
     addComment,
     draw,
@@ -33,6 +34,11 @@ export function init(store) {
             store.dispatch(userLeft(id));
         });
         /////////////////////////////////////////
+        socket.on("titles", topics => {
+            // console.log(topics);
+            store.dispatch(titles(topics));
+        });
+
         socket.on("top10comments", comments => {
             // console.log(comments);
             store.dispatch(topComments(comments));

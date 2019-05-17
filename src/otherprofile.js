@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "./axios";
 import Friendship from "./friendship";
+import Pm from "./pm";
+import { socket } from "./socket";
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
@@ -35,10 +37,21 @@ export default class OtherProfile extends React.Component {
                 this.props.history.push("/");
                 //to handle user types /user/37473687 or /87668hjhbkjbk (out of range)
             });
+        socket.emit("getMasterPiece", id);
+        socket.on("deployDrawing", arrObj => {
+            this.setState({ masterpiece: arrObj });
+        });
+    }
+
+    componentWillUnmount() {
+        //remove or stop listening when unmounting
+        socket.off("getMasterPiece");
+        socket.off("deployDrawing");
     }
 
     render() {
-        if (!this.state.id) {
+        if (!this.state.id || !this.state.masterpiece) {
+            // console.log("test");
             return (
                 <div className="center">
                     <img
@@ -49,20 +62,60 @@ export default class OtherProfile extends React.Component {
                 </div>
             );
         } else {
+            // console.log("test2", this.state.id, this.state.masterpiece);
             return (
-                <div className="content-container-horizontal">
-                    <img
-                        src={this.state.avatarurl || "/default-user.png"}
-                        height={200}
-                        width={200}
-                    />
-                    <div id="profile">
-                        <h3>
-                            {this.state.fn} {this.state.ln}
-                        </h3>
-                        {this.state.biodata}
-                        <Friendship profileOwnerId={this.state.id} />
+                <div>
+                    <div className="content-container-horizontal">
+                        <img
+                            src={this.state.avatarurl || "/default-user.png"}
+                            height={200}
+                            width={200}
+                        />
+                        <div id="profile">
+                            <h3>
+                                {this.state.fn} {this.state.ln}
+                            </h3>
+                            {this.state.biodata}
+                            <div className="buttons">
+                                <button
+                                    onClick={() =>
+                                        this.setState({ pmVisible: true })
+                                    }
+                                >
+                                    private-chat
+                                </button>
+                                <Friendship profileOwnerId={this.state.id} />
+                            </div>
+                            {this.state.pmVisible && (
+                                <Pm
+                                    profileOwnerId={this.state.id}
+                                    change={boolean =>
+                                        this.setState({ pmVisible: boolean })
+                                    }
+                                />
+                            )}
+                        </div>
                     </div>
+                    {this.state.masterpiece.length && (
+                        <div className="content-container">
+                            <h2>His Masterpieces</h2>
+                            <div className="wrap-nicely">
+                                {this.state.masterpiece.map(drawing => (
+                                    <div
+                                        className="friend-center"
+                                        key={drawing.id}
+                                    >
+                                        <img
+                                            src={drawing.masterpiece}
+                                            height={400}
+                                            width={250}
+                                            alt="my masterpiece"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         }

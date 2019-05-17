@@ -3,31 +3,67 @@ import { connect } from "react-redux";
 import { socket } from "./socket";
 
 class Chat extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { valid: true };
+        this.msg;
+    }
+
     componentDidMount() {
         if (this.myDiv) {
             this.myDiv.scrollTop = this.myDiv.scrollHeight;
         }
+        socket.on("handleChatError", data => {
+            this.setState({
+                valid: data.status
+            });
+        });
+        const id = this.props.chatId;
+        // console.log(id, this.props.allChats);
+        socket.emit("getChatMessages", id);
     }
-    //mounted function runs once only but if(this.myDiv) will still be triggered automatically when this-myDiv available during rendering.
-    //It seems like mounted function actually mounts its content and if a conditional statement is mounted, it will be triggered when it is true during rendering
+
+    componentWillUnmount() {
+        //remove or stop listening when unmounting
+        socket.off("handleChatError");
+    }
 
     componentDidUpdate() {
-        // console.log("hihi", this.myDiv.scrollHeight);
-        this.myDiv.scrollTop = this.myDiv.scrollHeight; //scroll all the way down to bottom everytime update made
+        this.myDiv.scrollTop = this.myDiv.scrollHeight;
     }
-    //chat container was binded and packed and saved at myDiv and the binded chat container must be the div that made scrollable
 
     handleInput(e) {
+        this.msg = e.target.value.trim();
         if (e.which === 13) {
-            // console.log(e.target.value);
-            var newChat = e.target.value.trim(); //remove all empty spaces in front or back
-            socket.emit("newChatMessage", newChat);
+            socket.emit("newChatMessage", {
+                msg: this.msg,
+                forumId: this.props.chatId
+            });
             e.target.value = "";
-            e.preventDefault(); //prevent enter key works after pressing enter
+            e.preventDefault();
         }
+        this.setState({
+            valid: true
+        });
+    }
+
+    send() {
+        socket.emit("newChatMessage", {
+            msg: this.msg,
+            forumId: this.props.chatId
+        });
+        this.setState({
+            valid: true
+        });
+        document.getElementById("textfield2").value = "";
+    }
+
+    exit() {
+        this.props.change(false);
     }
 
     render() {
+        // console.log(this.props.allChats);
         if (!this.props.allChats) {
             return (
                 <div className="center">
@@ -39,48 +75,66 @@ class Chat extends React.Component {
                 </div>
             );
         }
-
         const comments = this.props.allChats;
         const allComments = (
-            <div className="content-container">
-                <h1>Chat Chamber</h1>
-                <div id="nicewrap">
+            <div className="messages-background">
+                <div className="messages-container">
                     <div
-                        className="chats"
+                        className="messages"
                         ref={chatsContainer => (this.myDiv = chatsContainer)}
                     >
+                        {!comments.length && (
+                            <h3>
+                                Nothing at the moment. Take the first move and
+                                start the discussion.
+                            </h3>
+                        )}
+
                         {comments.map(user => (
                             <div className="row" key={user.commentid}>
                                 <img
-                                    src={user.avatarurl}
+                                    src={user.avatarurl || "/default-user.png"}
                                     height={100}
                                     width={100}
                                 />
                                 <div className="col">
                                     <div className="profile">
-                                        {user.firstn} {user.lastn},{" "}
-                                        {Date(user.created_at).split("GMT", 1)}
+                                        {user.firstn} {user.lastn}
                                     </div>
                                     {user.comment}
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div>
+                    {this.state.valid ? (
+                        <div />
+                    ) : (
+                        <p className="error">
+                            Hint: Dont leave blank and up to only 300 characters
+                        </p>
+                    )}
+                    <div className="textinput-container">
                         <textarea
-                            onKeyDown={this.handleInput}
-                            className="inputfield text"
+                            id="textfield2"
+                            onKeyUp={e => this.handleInput(e)}
+                            className="textinput"
+                            placeholder="some nice words here..."
+                            style={{ resize: "none" }}
                         />
+                        <button
+                            className="message-send-button"
+                            onClick={() => this.send()}
+                        >
+                            send
+                        </button>
                     </div>
+                    <button className="exit" onClick={() => this.exit()}>
+                        exit
+                    </button>
                 </div>
             </div>
         );
-        return (
-            <div className="content-container">
-                {!comments.length && <h3>No chats at the moment!</h3>}
-                {!!comments.length && allComments}
-            </div>
-        );
+        return <div>{allComments}</div>;
     }
 }
 

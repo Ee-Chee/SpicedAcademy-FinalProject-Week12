@@ -122,21 +122,21 @@ export default class Friendship extends React.Component {
             <div>
                 {this.state.sendRequestFlag && (
                     <button onClick={() => this.sendFriendRequest()}>
-                        send a friend request?
+                        send a friend request
                     </button>
                 )}
                 {this.state.cancelRequestFlag && (
                     <button onClick={() => this.delete()}>
-                        cancel the request?
+                        cancel the request
                     </button>
                 )}
                 {this.state.acceptRequestFlag && (
                     <button onClick={() => this.acceptFriendRequest()}>
-                        accept the request?
+                        accept the request
                     </button>
                 )}
                 {this.state.deleteRequestFlag && (
-                    <button onClick={() => this.delete()}>unfriend?</button>
+                    <button onClick={() => this.delete()}>unfriend</button>
                 )}
             </div>
         );

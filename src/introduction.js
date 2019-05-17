@@ -34,7 +34,10 @@ export default function Introduction() {
                             <strong> Mess-Around </strong> as it is truly a
                             great platform for messing-around!
                         </p>
-                        <div>You gonna like it much :D!!!</div>
+                        <div>
+                            So, what&apos;re you waiting for? Get an account and
+                            check out my profile now!
+                        </div>
                         <i
                             className="fas fa-quote-right"
                             style={{ textAlign: "right", fontSize: "20px" }}

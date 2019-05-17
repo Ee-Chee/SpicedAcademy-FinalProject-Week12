@@ -50,6 +50,13 @@ export default function(state = {}, action) {
         // console.log("deleted, ", state);
     }
 
+    if (action.type == "forum_topics") {
+        state = {
+            ...state,
+            forumTopics: [...action.topics]
+        };
+    }
+
     if (action.type == "10_comments") {
         state = {
             ...state,
@@ -58,15 +65,9 @@ export default function(state = {}, action) {
     }
 
     if (action.type == "add_comment") {
-        // console.log("here", action.comment[0]);
-        // console.log("here2", state.topComments);
-        const temp = state.topComments.filter(
-            user => state.topComments.indexOf(user) != 0
-        ); //eliminate the oldest data which is index 0 of this array
-        // console.log("here3", temp);
         state = {
             ...state,
-            topComments: [...temp, action.comment[0]]
+            topComments: [...state.topComments, action.comment[0]]
         };
         // console.log("here4", state.topComments);
     }

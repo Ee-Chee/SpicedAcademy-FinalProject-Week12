@@ -24,6 +24,13 @@ body {
     justify-content: center;
 }
 
+.absolute-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .row {
     display: flex;
 }
@@ -153,6 +160,10 @@ img {
     font-family: "Radley", serif;
     font-size: 20px;
     padding: 20px 100px;
+}
+
+.extra-margin-top {
+    margin-top: 80px;
 }
 /* ---------------------General classes-------------------- */
 /* welcome.js */
@@ -291,28 +302,48 @@ img {
     font-size: 18px;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* online friends */
-.online-container {
-    margin-right: 20px;
+/* friends */
+.wrap-nicely {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 5px solid #4db8ff;
+    border-radius: 10px;
+    background-color: #f0f0f5;
+    padding: 10px;
 }
 
-.online-container:hover {
-    background-color: #0066cc;
+.friend-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
 }
 
-.online {
+.friend-center:hover {
+    /* total size must be 5px as margin defined in class friend-center, otherwise the elements squeeze each other and shaky when hovering */
+    margin: 5px;
+    padding: 4px;
+    border: 1px solid #9999ff;
+    border-radius: 3px;
+    background-color: #ccccff;
+}
+
+.friend-link {
     text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* friends */
-.friend-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 20px;
+.nemo-button {
+    text-decoration: none;
 }
 
 /* chat */
@@ -331,4 +362,124 @@ img {
 .inputfield {
     width: 100%;
     height: 100px;
+}
+/* PM */
+.messages-background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.messages-container {
+    display: flex;
+    flex-direction: column;
+    border: 5px solid black;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-radius: 20px;
+    background-color: white;
+    color: #0066cc;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    height: 85%;
+    width: 100%;
+    font-family: "Radley", serif;
+    overflow-x: hidden;
+    padding: 10px;
+    /* border: 5px solid yellow; */
+}
+
+.textinput-container {
+    display: flex;
+    width: 100%;
+    height: 8%;
+}
+
+.textinput {
+    border: none;
+    width: 90%;
+    height: 100%;
+    font-family: "Radley", serif;
+    border: 3px solid #00e6e6;
+    border-left-style: none;
+    border-right-style: none;
+    font-size: 15px;
+    /* outline: none; */
+}
+
+.message-send-button {
+    width: 10%;
+    height: 100%;
+}
+
+.exit {
+    height: 5%;
+    margin-top: 5px;
+    width: 10%;
+    padding: 0px;
+}
+/* forum */
+.textinput-container-forum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* border: 1px solid black; */
+    width: 500px;
+}
+
+/* Pm */
+#new-message {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 25%;
+    background-color: white;
+    width: 500px;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    color: #0000e6;
+}
+
+#canvas {
+    border: 3px solid aqua;
+    border-radius: 5px;
+}
+
+#canvas:hover {
+    background-color: white;
+}
+
+/* responsive :D */
+
+#be-responsive-bro {
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 1000px) {
+    /* For tablets: */
+    #be-responsive-bro {
+        visibility: visible;
+    }
+}
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    #be-responsive-bro {
+        visibility: visible;
+    }
 }

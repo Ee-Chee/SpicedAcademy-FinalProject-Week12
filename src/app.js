@@ -6,10 +6,10 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import BioEditor from "./bioeditor";
 import OtherProfile from "./otherprofile";
-import Friends from "./friends";
 import OnlineFriends from "./onlinefriends";
-import Chat from "./chat";
+import Forum from "./forum";
 import Chart from "./chart";
+import Messaround from "./messaround";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -101,7 +101,7 @@ export default class App extends React.Component {
                         )}
                         <div className="nav" id="nav">
                             <Link className="link link-add link-add2" to="/">
-                                My Portfolio
+                                My Profile
                             </Link>
                             <Link
                                 className="link link-add"
@@ -109,14 +109,17 @@ export default class App extends React.Component {
                             >
                                 Chart Analysis
                             </Link>
-                            <Link className="link link-add" to="/friends">
-                                Co-messers
-                            </Link>
                             <Link className="link link-add" to="/online">
                                 Finding Nemo
                             </Link>
-                            <Link className="link link-add" to="/chat">
+                            <Link className="link link-add" to="/forum">
                                 Forex Forum
+                            </Link>
+                            <Link
+                                className="link link-add"
+                                to="/messing-around"
+                            >
+                                React-SocketIO
                             </Link>
                         </div>
                         <Route
@@ -126,7 +129,7 @@ export default class App extends React.Component {
                                 return (
                                     <Profile
                                         /* comment inside JSL */
-
+                                        userId={this.state.id}
                                         firstN={this.state.fn}
                                         lastN={this.state.ln}
                                         profilePic={
@@ -159,9 +162,9 @@ export default class App extends React.Component {
                         />
                         <Route path="/chart-analysis" component={Chart} />
                         <Route path="/user/:idnum" component={OtherProfile} />
-                        <Route path="/friends" component={Friends} />
                         <Route path="/online" component={OnlineFriends} />
-                        <Route path="/chat" component={Chat} />
+                        <Route path="/forum" component={Forum} />
+                        <Route path="/messing-around" component={Messaround} />
                     </div>
                 </BrowserRouter>
             );

@@ -86,24 +86,68 @@ exports.getUsersByIds = function(arrayOfIds) {
 };
 //ANY function loops through the array and match the passed ID. If more than one same id existing, it ignores and takes the very first one it found
 
-exports.addComment = function(com, id) {
-    let q = `INSERT INTO comments (comment, user_id) VALUES ($1, $2) RETURNING comments.id ;`;
-    let params = [com, id];
+exports.addComment = function(com, userid, forumid) {
+    let q = `INSERT INTO comments (comment, user_id, forum_id) VALUES ($1, $2, $3) RETURNING comments.id ;`;
+    let params = [com, userid, forumid];
     return db.query(q, params);
 };
 
-exports.getTop10Comments = function() {
-    let q = `SELECT comment, created_at, comments.id AS commentId, registered.id AS userId, firstN, lastN, avatarUrl FROM registered
-    JOIN comments ON registered.id = comments.user_id ORDER BY comments.id DESC LIMIT 10;`;
-    return db.query(q);
+exports.getTop10Comments = function(title_id) {
+    let q = `SELECT comment, comments.id AS commentId, firstN, lastN, avatarUrl FROM registered
+    JOIN comments ON registered.id = comments.user_id LEFT JOIN forum ON forum.id = comments.forum_id WHERE forum.id = $1 ORDER BY comments.id DESC;`;
+    let params = [title_id];
+    return db.query(q, params);
 };
 
 exports.getComment = function(com_id) {
-    let q = `SELECT comment, created_at, comments.id AS commentId, registered.id AS userId, firstN, lastN, avatarUrl FROM registered
-    JOIN comments ON (registered.id = comments.user_id AND comments.id = $1);`;
+    let q = `SELECT comment, comments.id AS commentId, firstN, lastN, avatarUrl FROM registered
+    JOIN comments ON registered.id = comments.user_id LEFT JOIN forum ON forum.id = comments.forum_id WHERE comments.id = $1;`;
     return db.query(q, [com_id]);
 };
 
+exports.getPMs = function(userID, otherID) {
+    //registered.id is the sender id (always true)
+    let q = `SELECT pm.id AS pm_id, pm, firstN, lastN, avatarUrl FROM registered
+    JOIN pm ON (sender_id=$1 AND recipient_id = $2 AND registered.id = $1) OR (sender_id = $2 AND recipient_id = $1 AND registered.id = $2) ORDER BY pm.id DESC LIMIT 20;`;
+    let params = [userID, otherID];
+    return db.query(q, params);
+};
+
+exports.addPM = function(msg, userID, otherID) {
+    let q = `INSERT INTO pm (pm, sender_id, recipient_id) VALUES ($1, $2, $3);`;
+    let params = [msg, userID, otherID];
+    return db.query(q, params);
+};
+
+exports.searchFriend = function(char) {
+    let q = `SELECT firstN, lastN, id, avatarUrl FROM registered WHERE firstN LIKE $1 LIMIT 5;`;
+    let params = [char + "%"];
+    return db.query(q, params);
+    //%sign means all kind characters
+};
+
+exports.addForumTitle = function(char) {
+    let q = `INSERT INTO forum (title) VALUES ($1) RETURNING * ;`;
+    let params = [char];
+    return db.query(q, params);
+};
+
+exports.getForumTitle = function() {
+    let q = `SELECT id, title FROM forum;`;
+    return db.query(q);
+};
+
+exports.addDrawing = function(url, id) {
+    let q = `INSERT INTO canvas (masterpiece, user_id) VALUES ($1, $2);`;
+    let params = [url, id];
+    return db.query(q, params);
+};
+
+exports.getDrawing = function(id) {
+    let q = `SELECT id, masterpiece FROM canvas WHERE user_id = $1;`;
+    let params = [id];
+    return db.query(q, params);
+};
 //////////////////////////////////////////////////////////
 
 // INSERT INTO comments (comment, user_id) VALUES ('fhsdhkdsuf', 21);

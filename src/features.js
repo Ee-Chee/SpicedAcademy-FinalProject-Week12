@@ -8,16 +8,16 @@ export default function Features() {
             </h1>
             <div className="column">
                 <div className="features-container">
+                    <i className="fas fa-address-card icon" />
+                    Profile management
+                </div>
+                <div className="features-container">
                     <i className="fas fa-chart-line icon" />
                     Real-time FOREX market analysis
                 </div>
                 <div className="features-container">
                     <i className="fas fa-money-check-alt icon" />
                     Free demo Mess-Around account
-                </div>
-                <div className="features-container">
-                    <i className="fas fa-address-card icon" />
-                    Portfolio management
                 </div>
                 <div className="features-container">
                     <i className="fas fa-user-plus icon" />
@@ -29,7 +29,7 @@ export default function Features() {
                 </div>
                 <div className="features-container">
                     <i className="fab fa-react icon" />
-                    React Mess-Around
+                    React-SocketIO Mess-Around
                 </div>
             </div>
         </div>

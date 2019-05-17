@@ -31,7 +31,9 @@ export default class Login extends React.Component {
                 {this.state.valid ? (
                     <div />
                 ) : (
-                    <div>Invalid inputs! Try again!</div>
+                    <div className="error">
+                        Invalid inputs! Bro, no hacking activities here please.
+                    </div>
                 )}
                 <form className="col">
                     <input
@@ -46,7 +48,7 @@ export default class Login extends React.Component {
                         name="pW"
                         onChange={this.handleChange}
                     />
-                    <button onClick={this.submit}>Let&apos;s mess</button>
+                    <button onClick={this.submit}>Let&apos;s mess up</button>
                 </form>
             </div>
         );

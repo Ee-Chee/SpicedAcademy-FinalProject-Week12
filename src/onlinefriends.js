@@ -1,11 +1,30 @@
+//finding nemo
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-//Important concept: Redux is a global of global variables(or store). It means the data can be accessed everywhere even it is by different .js file.
-//There is no need to change state data, so, action is not requestingFriends
-//There is a need of passing down data, connect is needed, so that data can be rendered
+import axios from "./axios";
 
 class OnlineFriends extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { searchResults: [] };
+    }
+
+    handleInput(e) {
+        // console.log(e.target.value);
+        axios.post("/search", { char: e.target.value }).then(resp => {
+            if (resp.data.length === 0) {
+                this.setState({ emptyArr: true });
+                this.setState({ searchDisplay: false });
+            } else {
+                this.setState({ emptyArr: false });
+                // console.log("return", resp.data);
+                this.setState({ searchDisplay: true });
+                this.setState({ searchResults: resp.data });
+            }
+        });
+    }
+
     render() {
         const onlineUsers = this.props.allOnlineFriends;
         if (!onlineUsers) {
@@ -21,15 +40,49 @@ class OnlineFriends extends React.Component {
         }
         const allOnlineUsers = (
             <div className="content-container">
+                <input
+                    placeholder="search for a Messer here..."
+                    onChange={e => this.handleInput(e)}
+                />
+                {this.state.emptyArr && (
+                    <div className="error text">Opps...no results found</div>
+                )}
+                {this.state.searchDisplay && (
+                    <div className="wrap-nicely">
+                        {this.state.searchResults.map(user => (
+                            <div className="friend-center" key={user.id}>
+                                <Link
+                                    className="friend-link"
+                                    to={"/user/" + user.id}
+                                >
+                                    <img
+                                        src={
+                                            user.avatarurl ||
+                                            "/default-user.png"
+                                        }
+                                        height={120}
+                                        width={120}
+                                    />
+                                    <div style={{ color: "#00e6e6" }}>
+                                        {user.firstn} {user.lastn}
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <h1>All online Messers</h1>
-                <div className="row">
+                <div className="wrap-nicely">
                     {onlineUsers.map(user => (
-                        <div className="online-container" key={user.id}>
-                            <Link className="online" to={"/user/" + user.id}>
+                        <div className="friend-center" key={user.id}>
+                            <Link
+                                className="friend-link"
+                                to={"/user/" + user.id}
+                            >
                                 <img
-                                    src={user.avatarurl}
-                                    height={100}
-                                    width={100}
+                                    src={user.avatarurl || "/default-user.png"}
+                                    height={120}
+                                    width={120}
                                 />
                                 <div style={{ color: "#00e6e6" }}>
                                     {user.firstn} {user.lastn}
