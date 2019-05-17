@@ -37,7 +37,7 @@ export default class Uploader extends React.Component {
                 {this.state.valid ? (
                     <div />
                 ) : (
-                    <div>Invalid image! Try again!</div>
+                    <div className="error">Invalid image! Try again!</div>
                 )}
                 <form className="col">
                     <input

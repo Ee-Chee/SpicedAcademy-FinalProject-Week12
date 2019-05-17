@@ -97,10 +97,48 @@ class OnlineFriends extends React.Component {
         return (
             <div className="content-container">
                 {!onlineUsers.length && (
-                    <h3>
-                        Congratulations you are the only one online! This is
-                        unusual, hurry, take a photo of it :D
-                    </h3>
+                    <div>
+                        <input
+                            placeholder="search for a Messer here..."
+                            onChange={e => this.handleInput(e)}
+                        />
+                        {this.state.emptyArr && (
+                            <div className="error text">
+                                Opps...no results found
+                            </div>
+                        )}
+                        {this.state.searchDisplay && (
+                            <div className="wrap-nicely">
+                                {this.state.searchResults.map(user => (
+                                    <div
+                                        className="friend-center"
+                                        key={user.id}
+                                    >
+                                        <Link
+                                            className="friend-link"
+                                            to={"/user/" + user.id}
+                                        >
+                                            <img
+                                                src={
+                                                    user.avatarurl ||
+                                                    "/default-user.png"
+                                                }
+                                                height={120}
+                                                width={120}
+                                            />
+                                            <div style={{ color: "#00e6e6" }}>
+                                                {user.firstn} {user.lastn}
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <h3>
+                            Congratulations you are the only one online! This is
+                            unusual, hurry, take a photo of it :D
+                        </h3>
+                    </div>
                 )}
                 {!!onlineUsers.length && allOnlineUsers}
             </div>
