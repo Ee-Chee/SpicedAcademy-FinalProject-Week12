@@ -15,7 +15,7 @@ const client = knox.createClient({
 });
 
 exports.upload = function(req, res, next) {
-    // console.log(req.file);
+    console.log(req.file);
     if (!req.file) {
         return res.sendStatus(500); //send 'Internal Server Error'
     }

@@ -51,18 +51,16 @@ export default function Welcome() {
                     />
                     <Route path="/login" component={Login} />
                     <Route path="/info" component={About} />
-                </div>
-            </HashRouter>
-            <div id="be-responsive-bro">
-                <div className="messages-background">
-                    <div className="messages-container absolute-center">
-                        As you can see, my website is still responsive to your
-                        device. For the best user experience, please use laptop
-                        or desktop PC to visit my website. Thank you !!! very
-                        much !
+                    <div id="be-responsive-bro">
+                        <div className="messages-background">
+                            <div className="messages-container absolute-center">
+                                This website is not responsive. Please use PC or
+                                laptop to visit my website. Thank you.
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </HashRouter>
         </div>
     );
 }

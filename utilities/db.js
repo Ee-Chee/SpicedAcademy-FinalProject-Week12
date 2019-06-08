@@ -120,7 +120,7 @@ exports.addPM = function(msg, userID, otherID) {
 };
 
 exports.searchFriend = function(char) {
-    let q = `SELECT firstN, lastN, id, avatarUrl FROM registered WHERE firstN LIKE $1 LIMIT 5;`;
+    let q = `SELECT firstN, lastN, id, avatarUrl FROM registered WHERE Lower(firstN) LIKE Lower($1) LIMIT 5;`;
     let params = [char + "%"];
     return db.query(q, params);
     //%sign means all kind characters

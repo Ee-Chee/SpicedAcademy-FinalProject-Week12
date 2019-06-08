@@ -133,7 +133,7 @@ var uploader = multer({
 });
 
 app.post("/upload", uploader.single("funky"), s3.upload, (req, res) => {
-    console.log(req.file); //an object that multer added to the req
+    // console.log(req.file); //an object that multer added to the req
     // console.log(req.body); //show nothing but there is img inside
     const url = cf.s3Url + req.file.filename;
     dB.addImage(url, req.session.userId)
