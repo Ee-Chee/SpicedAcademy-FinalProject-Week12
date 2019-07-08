@@ -52,12 +52,12 @@
 5) 'Chart Analysis' tab
 * This is where users can create a demo account and mess around in FOREX market with fake money. 
 * The trading platform used is called 'Metatrader5'. Open an account and try it out!
-* Note the market is closed from Friday night till Sunday night. During this period, user cannot trade nor check the market price. 
+* Note that the market is closed from Friday night till Sunday night. During this period, user cannot trade nor check the market price. 
 
 <img src="chartanalysis.png">
 
 6) 'Finding Nemo' tab
-* Users can find other users here by inserting their registered first name and last name in the given input field. It is not character sensitive. All the results matched will be shown.
+* User can find other users here by inserting their registered first name and last name in the given input field. It is not character sensitive. All the results matched will be shown.
 * The displayed results include the avatar of the matched users, their first name and last name.
 * If no results found, a message for that will pop out.
 * In addition, all the current online users can be seen in 'All online Messers'.
