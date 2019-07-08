@@ -40,7 +40,7 @@
 <img src="myprofile2.png">
 
 * Once user adds some other users/messers, their profile card will be shown in 'My added Messers'. Upon clicking, user can see their profile, start privat-chatting with them and the most fun part, check out their masterpieces if they have any. 
-* 'Unfriend' button is also available to remove them from user's friend list.
+* 'Unfriend' button is also available to remove them from 'My added Messers'.
 
 <img src="myprofile3.png">
 
