@@ -76,57 +76,26 @@
 
 <img src="pm.png">
 
-* Additional feature for private-chat. As the third person is trying to send a message to the user who is chatting with someone else, the sent message will appear on top of the screen, telling the user that she has a new message from others.
+* Additional feature for private-chat. As the third person is trying to send a message to the user who is chatting with someone else, the sent message will appear on top of the screen, telling the user that she has a new message from others. The message lasts for only 5 seconds before it disappears.
 
 <img src="otherspm.png">
 
-8) 
+8) 'Forex Forum' tab
+* In this UI, user can cast a topic(e.g. financial crisis, what is FOREX) and all the other users are welcome to leave their comments, thoughts or feelings here. Similar functionalities as privat-chat, users can discuss about the given topic together and check the history of the discussion.   
 
+<img src="forum1.png">
 
+<img src="forum2.png">
 
+9) 'React-SocketIO' tab
+* This part is a real-time multi-player mini game of drawing. The feature allows all the online users to join the 'stick-man' drawing at the same time. Users can build a masterpiece together with their friends or even strangers. 
+* There are two buttons available here: 'Again'- remove everything and do it together again, 'Save it to profile'- save the drawing to 'My Masterpieces' on 'My Profile' tab. 
 
+<img src="game.png">
 
-
-
-
-
-7) My snow builders
-* 'My snow builders' is on the second tab menu. It contains a Friends component that allows users to see all of the users who have sent them friend requests that they have not yet accepted as well as the full list of all their friends. The path for this is '/friends'.
-* Each added friend is shown along with a button that allows the user to end the friendship. Similarly, each potential friend is displayed with a button for accepting the request.
-* Redux is used for this feature as well as all other added features henceforward. The fetching of the friends and requesters are caused by the dispatching of an action. Actions are dispatched also for accepting friend requests and ending friendships. 
-* When requests are accepted and friendships ended, reducer changes the state object to one that has the new list of users. This causes re-rendering with either new users appearing in the list of friends or old friends disappearing from it.
-
-<img src="friends.png">
-
-8) Online builders
-* OnlineFriends component is created(client) and socket.io(server) is used to display all the current online friends.
-
-Server side
-* When a user(client) first communicates with server, a connection with socket.io is also established. Socket.io runs the cookie-session middleware to get the id of the user. If no cookie is detected, socket.io is then disconnected.
-* An object, onlineUsers that uses socket ids as keys and user ids as values is created. Those ids are used to detect the online users by emitting 'onlineUsers', 'userJoined' and 'userLeft' events.
-* If a user who has the site open in two tabs(two sockets associated) closes one of them, she will still remain in the list of online users.
-
-Client side
-* In client code, the 'onlineUsers', 'userJoined' and 'userLeft' events are listened to dispatch corresponding actions. The actions result in an up-to-date list of online users being present in the global state object at all times. OnlineFriends component for displaying the list of online users is passed the list as a prop by a container component created with the connect function exported by react-redux.
-
-<img src="online.png">
-
-9) Chit-chat
-* Socket.io is used to create a community-wide chat room. This feature uses socket.io and Redux similarly to the list of online users.
-* A child route '/chat' is created to BrowserRouter in App component. Chat component displays the messages that have been received as well as a textarea in which the user can type a new message. 
-* As the user hits the enter key in this textarea, a 'chatMessage' event is emitted. The server receives this event, it broadcasts a 'newChatMessage' event to all of the connected sockets. The payload for this event includes the message the user sent as well as the user's id, first name, last name and avatar. The server stores the message in a database table. 
-* In the chat UI, a newly received message is always added to the bottom of the display area and automatic scrolling brings it into view. 
- 
-<img src="chat.png">
-
-10) Build a snowman together
-* Snowman component is a real-time multi-player mini game of drawing. The feature allows all online users to join the 'stick-man' drawing at the same time. With this, you can build a snowman together with your friends and strangers. 
-* By means of socket-io, canvas and redux, each coordinate of the drawing made is broadcasted to every online user, making real-time drawing possible for all online users.  
-
-<img src="snowman.png">
 
 **_NOTES_**:
 * Coding technologies: HTML, CSS, Javascript, JSON, DOM, Axios+crsf, Canvas, React.js, Redux, Node.js, Express, multer, bcrypt, compression, Jest(Enzyme), Postgresql, cookie-session and Socket-io.  
 * Third party tools: Amazon Web Services(S3 storage), Fontawesome-Icons, ReduxDevTools, GoogleFonts and Webpack.
 
-Thank you for reading. 10 out of 10 likes to this project.
+Thank you for reading. 10 out of 10 likes to this project. 
