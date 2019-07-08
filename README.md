@@ -25,7 +25,7 @@
 <img src="topmenu.png">
 
 * Basically, top menu holds the logo, user ID, avatar and two clickable icons: log-out button and profile picture uploader.
-* Just like the blue cloud icon, the avatar is also clickable. As they are clicked, profile picture uploader functionality is triggered. User is able to change their avatar here. Default user image will be set if no avatar is uploaded. 
+* Just like the blue cloud icon, the avatar is also clickable. As they are clicked, profile picture uploader functionality is triggered. Users are able to change their avatar here. Default user image will be set if no avatar is uploaded. 
 
 <img src="uploader.png">
 
