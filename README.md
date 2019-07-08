@@ -1,98 +1,94 @@
 # Final Project - Mess Around
 * This is the final project I had done for SPICED Academy. This is also a theme-free project, we shall create a project based on our preference and creativity. Due to the interest in Node.js, React.js, Redux and Socket.io, I created another social-network project that was similar to [my previous project](https://github.com/Ee-Chee/SpicedAcademy-Tabasco-SocialNetwork-Week9to11).
 * Comparing to the previous one, I added more features in this project and also improved the css design, making it looked more rigid and professional.
-* The name of this project is called Mess Around. Apart from its social-network feature, it allows users to create a FOREX demo account. Here is where users mess around their capital in a demo account. Users open a position(buy or sell currency pairs) as they want with the fake money. The FOREX market is based on real-time market out there. In another words, users learn about risk management and market analysis in a real-time market basis in my site. There are also other additional features described in the following section. Very interesting? I know right, let get yourself an account and have fun: https://m-around.herokuapp.com/.   
+* The name of this project is called Mess Around. Apart from its social-network feature, it allows users to create a FOREX demo account. Here is where users mess around their capital in a demo account. Users open a position(buy or sell currency pairs) as they want with the fake money. The FOREX market is based on real-time market out there. In another words, users learn about risk management and market analysis in a real-time market basis on my site. There are also other additional features described in the following section. Very interesting? I know right, get yourself an account and have fun: https://m-around.herokuapp.com/.   
+
+<img src="welcome.png">
 
 ## Features
-1) Registration
-* When logged-out users arrive at the site, they should be redirected to a /welcome route that serves the same HTML file as / and it should show a UI that looks something like this:
+1) Better CSS design
+* While CSS might be very easy to learn, it could be very challenging and time-consuming when it comes to a professional design and implementation.
+* In this project, I standardized the colours, fonts, borders, paddings and margins used, making all UIs look more professional and user-friendly.
+* Unfortunately, it is not responsive to all devices. If you are interested in my responsive project, click [this project - Petition](https://github.com/Ee-Chee/SpicedAcademy-Tabasco-Petition-Week7) and the [site](https://eechee.herokuapp.com/).
 
-<img src="registration.png">
+2) Welcome page
+* Users who first visit the website or log-out users(cookies deleted) will be redirected to this page. This parent component contains 5 child components.
+* Introduction component gives the overview of this site.
+* Features component describes the main features of the site.
+* A little description about me can be found in 'About Me' tab, the About component.
+* Registration component allows new users to register an account. All fields are required and '@' must be included in your email address. Otherwise, it prompts an error message.
+* Lastly, login component is made for the users who already had an account and they wish to revisit the site again. Welcome back.
 
-* The page shows the social network's identity in a large display. A form with the fields: first name, last name, email and password. Also a button to submit the registration form.
-* Two React components are required to create this display. A component called Registration that displays the registration form itself.
-A component called Welcome that renders Registration as well as the surrounding UI. The form is made to be its own component so that there is an option of placing it in other contexts. 
-* Registration is a stateful component. That is, it is created using class since it needs to have a state property that is updated in response to changes. For example, if the axios response to the POST triggered by clicking on the button indicates that something went wrong, an error message will be rendered.
+3) Top menu
+* After registration or logging-in, users are redirected to 'My Profile' tab. Same goes to those cookie holders as well. Before I proceed to the introduction of 'My Profile' tab, I would like to brief about the functionalities of top menu as shown in the figure below.
 
-2) Log-in 
-* A new component called Login is required for this form. This component works pretty much like Registration. It submits user input via axios and redirect upon success. It also displays a message if an error occurs.
-* The real challenge here is swapping out the Registration component for the Login component when the user clicks the link. It is accomplished by using React Router. React Router lets you specify in JSX what components should display when specific urls are navigated to. For this part of the project HashRouter is used.
-* When users log-in successfully, a cookie is created and they are redirected to page with a new top-level component named App that containes Logo, user ID, avatar, log-out, profile picture(avatar) uploader and other components. 
+<img src="topmenu.png">
 
-<img src="log-in.png">
+* Basically, top menu holds the logo, user ID, avatar and two clickable icons: log-out button and profile picture uploader.
+* Just like the blue cloud icon, the avatar is also clickable. As they are clicked, profile picture uploader functionality is triggered. User is able to change their avatar here. Default user image will be set if no avatar is uploaded. 
 
-3) Uploading avatar
-* As soon as users log-in, App makes an axios request in the componentDidMount method to get basic data about the user such as id, first name, last name, and their avatarurl. Then, it passes the avatar url to Avatar component.
-* Avatar displays the image. If there is no url, a default user image is displayed.
-* The next child component of App, Uploader is only visible after the user clicks on the avatar. Its display is determined by a property of the state of the App component called uploaderVisible. Avatar is passed with a function from App. Upon clicking, event is triggered and the function is called to set this property to true making Uploader visible.
-* The Uploader component is also passed a function for setting the avatarurl of the App component's state. After a successful upload, it calls this function and pass to it the url of the image that was just uploaded, causing Avatar to automatically switch to the new image. Finally, the function for setting avatarurl also sets uploaderVisible to false.
+<img src="uploader.png">
 
-<img src="upload.png">
+4) 'My Profile' tab
+* 'My Profile' tab simply shows avatar, registered first name, last name, the bio of the user, masterpieces, added friends and friendship requesters.
+* Users can describe more about themselves by adding bio data here. Editing is possible after saving.
 
-4) Profile and biography
-* Users' profile information is shown when they first log in. This includes their name, their avatar and their bio. On this screen, users are able to update their profile picture and edit their bio(or add one if they haven't already).
-* The Profile component is responsible for laying out the content: the user's name, profile picture, and bio. Profile is also a direct child of App.
-* The Profile component itself contains two other components: The existing Avatar component and a new BioEditor component, which handles the user's bio. 
-* The logic for determining what to show in the render function of BioEditor goes like this:
+<img src="myprofile1.png">
 
-```
-  Is the bio being edited?
-          /       \
-         /         \
-    yes /           \ no
-       /             \
-      /               \
-<textarea>           Is there a saved bio already?
-"Save" button                 /       \
-                             /         \
-                        yes /           \ no
-                           /             \
-                          /               \
-            Current bio text             "Add" button
-            "Edit" button
-```
+* Remember this special section, 'My masterpieces', this section will be used again when we talk about the 'React-SocketIO' tab. The canvas data url saved in 'React-SocketIO' will be displayed as an image in this section.
 
-* Since information that Profile needs to show is held in the state of App, App passes this information that BioEditor and the second Avatar need as props to Profile and then Profile passes those props to its children.
+<img src="myprofile2.png">
 
-<img src="profile-bio.png">
+* Once user adds some other users/messers, their profile card will be shown in 'My added Messers'. Upon clicking, user can see their profile, start privat-chatting with them and the most fun part, check out their masterpieces if they have any. 
+* 'Unfriend' button is also available to remove them from user's friend list.
 
-<img src="profile-bio2.png">
+<img src="myprofile3.png">
 
-5) Viewing other profiles by changing user ID from url
-* The responsibility of the OtherProfile component is to show the profile information of a user other than the logged-in user. 
-* When OtherProfile mounts, it makes a request to retrieve the relevant profile information. This means it must know the id of the user whose profile it is to display. This id comes from the url. Users can set the path of the Route that renders OtherProfile to a value such as '/user/:idnum', the component will automatically receive a prop named match that contains information about how React Router interpreted the url. The match object has a property named params(this.props.match.params.idnum), an object that has properties for each segment of the path you marked with a colon(in this case, it is 'idnum'). With this, the user ID now is accessible.
+* Lastly, user can also check the profile of those who want to befriend her. These requesters are listed in 'These people wanna mess-around together with you'. 
+* Hit the 'accept the request' button to befriend them.
+
+<img src="myprofile4.png">
+
+5) 'Chart Analysis' tab
+* This is where users can create a demo account and mess around in FOREX market with fake money. 
+* The trading platform used is called 'Metatrader5'. Open an account and try it out!
+* Note the market is closed from Friday night till Sunday night. During this period, user cannot trade nor check the market price. 
+
+<img src="chartanalysis.png">
+
+6) 'Finding Nemo' tab
+* Users can find other users here by inserting their registered first name and last name in the given input field. It is not character sensitive. All the results matched will be shown.
+* The displayed results include the avatar of the matched users, their first name and last name.
+* If no results found, a message for that will pop out.
+* In addition, all the current online users can be seen in 'All online Messers'.
+
+<img src="find-online.png">
+
+* All these shown profile cards are clickable. Same as clicking the profile cards shown on 'My Profile' tab, after clicking, user can check others' bio data, name, avatar and masterpieces or even private-chat, befriend and unfriend them.  
 
 <img src="otherprofile.png">
 
-6) Friend Request
-* A Friendship component is created as a child of the OtherProfile component to allow users to friend and unfriend other users.
-* The logic for determining what the button should say and what should happen when it is clicked goes likes this:
+* There is another way of looking for other user's profile, i.e. by changing ID number in the url. For an example, if the particular friend has an ID number of 2, alter the url to https://m-around.herokuapp.com/user/2. If one changes the ID number to her own ID, she will be redirected to 'My Profile' tab.
 
-```
-Is there an existing request between the profile viewer and profile owner?
-                            /           \
-                           /             \
-                       no /               \ yes
-                         /                 \
-                        /                   \
-       "Send Friend Request"              Is the request accepted?
-                                                /           \
-                                               /             \
-                                           no /               \ yes
-                                             /                 \
-                                            /                   \
-            Is the profile owner the recipient?              "Unfriend"
-                       /           \
-                      /             \
-                  no /               \ yes
-                    /                 \
-                   /                   \
-"Accept Friend Request"             "Cancel Friend Request"
+7) Private chat
+* Like most of the messaging apps out there, this feature makes use of SocketIO to allow users to chat with each other or even leave a message to the offline users.
+* A private-chat window will pop out as user clicks the 'privat-chat' button on other user's profile. User can send other user as many messages as they want. There is a scrollable bar, history of the chats can be seen. However when there is a new message coming in, it is automatically navigated to the bottom of the bar where the new message is shown. 
+
+<img src="pm.png">
+
+* Additional feature for private-chat. As the third person is trying to send a message to the user who is chatting with someone else, the sent message will appear on top of the screen, telling the user that she has a new message from others.
+
+<img src="otherspm.png">
+
+8) 
 
 
-profile viewer = the logged-in user, the one who is viewing the profile
-profile owner = the user whose profile is being viewed, the one whose id is in the url
-```     
+
+
+
+
+
+
 
 7) My snow builders
 * 'My snow builders' is on the second tab menu. It contains a Friends component that allows users to see all of the users who have sent them friend requests that they have not yet accepted as well as the full list of all their friends. The path for this is '/friends'.
