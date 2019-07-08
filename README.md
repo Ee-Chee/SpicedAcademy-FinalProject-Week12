@@ -1,5 +1,7 @@
-# Social Network
-This is a social network which users can sign up, say a little about themselves, become friends with other users and even build a snowman together. This is also a single-page application made with React.js. Interesting? Register an account with your friends and have fun together: https://momentmal.herokuapp.com.
+# Final Project - Mess Around
+* This is the final project I had done for SPICED Academy. This is also a theme-free project, we shall create a project based on our preference and creativity. Due to the interest in Node.js, React.js, Redux and Socket.io, I created another social-network project that was similar to [my previous project](https://github.com/Ee-Chee/SpicedAcademy-Tabasco-SocialNetwork-Week9to11).
+* Comparing to the previous one, I added more features in this project and also improved the css design, making it looked more rigid and professional.
+* The name of this project is called Mess Around. Apart from its social-network feature, it allows users to create a FOREX demo account. Here is where users mess around their capital in a demo account. Users open a position(buy or sell currency pairs) as they want with the fake money. The FOREX market is based on real-time market out there. In another words, users learn about risk management and market analysis in a real-time market basis in my site. There are also other additional features described in the following section. Very interesting? I know right, let get yourself an account and have fun: https://m-around.herokuapp.com/.   
 
 ## Features
 1) Registration
@@ -131,6 +133,4 @@ Client side
 * Coding technologies: HTML, CSS, Javascript, JSON, DOM, Axios+crsf, Canvas, React.js, Redux, Node.js, Express, multer, bcrypt, compression, Jest(Enzyme), Postgresql, cookie-session and Socket-io.  
 * Third party tools: Amazon Web Services(S3 storage), Fontawesome-Icons, ReduxDevTools, GoogleFonts and Webpack.
 
-Thank you for reading. 10 out of 10 likes to this project. Like React.js, Redux and Socket.io very much. I have completed 3 projects that making use of these technologies so far, check the other two projects out:
-* [mini project](https://github.com/Ee-Chee/SpicedAcademy-Tabasco-SocialNetwork/tree/master/mini-project-REDUX). It helped me to master the concept of Redux. 
-* [Final project of SpicedAcademy](https://github.com/Ee-Chee/SpicedAcademy-FinalProject)
+Thank you for reading. 10 out of 10 likes to this project.
